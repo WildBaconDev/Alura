@@ -1,41 +1,49 @@
 package br.com.caelum.financas.modelo;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
+import javax.persistence.*;
 
 @Entity
 public class Movimentacao {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
+
 	private BigDecimal valor;
-	
+
 	@Enumerated(EnumType.STRING)
-	private TipoMovimentacao tipo;
-	
-	@Temporal(TemporalType.TIMESTAMP)
+	private TipoMovimentacao tipoMovimentacao;
+
+	@Temporal(TemporalType.DATE)
 	private Calendar data;
-	
+
 	private String descricao;
 
 	@ManyToOne
 	private Conta conta;
-	
+
+	@ManyToMany
+	private List<Categoria> categorias;
+
 	public Integer getId() {
 		return id;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 
 	public void setId(Integer id) {
@@ -50,12 +58,12 @@ public class Movimentacao {
 		this.valor = valor;
 	}
 
-	public TipoMovimentacao getTipo() {
-		return tipo;
+	public TipoMovimentacao getTipoMovimentacao() {
+		return tipoMovimentacao;
 	}
 
-	public void setTipo(TipoMovimentacao tipo) {
-		this.tipo = tipo;
+	public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
+		this.tipoMovimentacao = tipoMovimentacao;
 	}
 
 	public Calendar getData() {
@@ -81,5 +89,7 @@ public class Movimentacao {
 	public void setConta(Conta conta) {
 		this.conta = conta;
 	}
-	
+
+
+
 }

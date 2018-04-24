@@ -1,42 +1,44 @@
 package br.com.caelum.financas.teste;
 
-import java.math.BigDecimal;
-import java.util.Calendar;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.Movimentacao;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
 import br.com.caelum.financas.util.JPAUtil;
 
+import javax.persistence.EntityManager;
+import java.math.BigDecimal;
+import java.util.Calendar;
+
+/**
+ * Created by leonardocordeiro on 24/02/17.
+ */
 public class TesteJPARelacionamento {
 
-	public static void main(String[] args) {
-		Conta conta = new Conta();
-		// 1745    | 237 - BANCO BRADESCO          | 86759-1 | Paulo Roberto Souza
-		conta.setAgencia("1745");
-		conta.setBanco("237 - BANCO BRADESCO");
-		conta.setNumero("86759-1");
-		conta.setTitular("Paulo Roberto Souza");
-		conta.setId(2);
-		
-		Movimentacao movimentacao = new Movimentacao();
-		movimentacao.setData(Calendar.getInstance());
-		movimentacao.setDescricao("Descrição");
-		movimentacao.setTipo(TipoMovimentacao.ENTRADA);
-		movimentacao.setValor(new BigDecimal("300"));
-		
-		movimentacao.setConta(conta);
+    public static void main(String[] args) {
 
-		JPAUtil transaction = new JPAUtil();
-		EntityManager em = transaction.getTransaction();
+        Conta conta = new Conta();
+        conta.setAgencia("111");
+        conta.setBanco("Itau");
+        conta.setNumero("54321");
+        conta.setTitular("Leonardo");
 
-//		em.merge(conta);
-//		em.persist(movimentacao);
+        Movimentacao movimentacao = new Movimentacao();
+        movimentacao.setData(Calendar.getInstance());
+        movimentacao.setDescricao("Churrascaria");
+        movimentacao.setTipoMovimentacao(TipoMovimentacao.SAIDA);
+        movimentacao.setValor(new BigDecimal("200.0"));
 
-		transaction.transactionCommit();
+        movimentacao.setConta(conta);
 
-	}
+        EntityManager manager = new JPAUtil().getEntityManager();
+        manager.getTransaction().begin();
+
+        manager.persist(conta);
+        manager.persist(movimentacao);
+
+        manager.getTransaction().commit();
+        manager.close();
+
+    }
+
 }
