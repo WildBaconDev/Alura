@@ -1,14 +1,8 @@
 package br.com.caelum.financas.modelo;
 
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-
 import javax.persistence.*;
 
 @Entity

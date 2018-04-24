@@ -2,14 +2,10 @@ package br.com.caelum.financas.teste;
 
 import br.com.caelum.financas.modelo.Conta;
 import br.com.caelum.financas.modelo.TipoMovimentacao;
-import br.com.caelum.financas.modelo.dao.MovimentacaoDao;
 import br.com.caelum.financas.util.JPAUtil;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.lang.reflect.Type;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
